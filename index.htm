@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>Stylek ZY</title>
+
+<style>
+body{
+  background:#000;
+  color:#d4af37;
+  font-family:Segoe UI, Tahoma;
+  margin:0;
+  text-align:center;
+}
+
+/* شاشة الاشتراك */
+#subscribe{
+  position:fixed;
+  inset:0;
+  background:#000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+}
+
+.sub-box{
+  background:#0b0b0b;
+  border:2px solid #d4af37;
+  border-radius:18px;
+  width:380px;
+  padding:25px;
+  box-shadow:0 0 30px rgba(212,175,55,.4);
+}
+
+.sub-box a{
+  display:block;
+  margin:15px 0;
+  background:linear-gradient(45deg,#d4af37,#b8962e);
+  color:#000;
+  padding:12px;
+  border-radius:30px;
+  font-weight:bold;
+  text-decoration:none;
+}
+
+.sub-box button{
+  margin-top:15px;
+  padding:10px 25px;
+  border:none;
+  border-radius:25px;
+  background:#d4af37;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.dev{
+  margin-bottom:10px;
+  font-size:14px;
+  opacity:.8;
+}
+
+/* الموقع */
+.container{
+  width:420px;
+  margin:40px auto;
+  background:#0b0b0b;
+  border:2px solid #d4af37;
+  border-radius:18px;
+  padding:25px;
+  box-shadow:0 0 30px rgba(212,175,55,.4);
+}
+
+.counter{
+  margin:10px 0;
+  font-size:14px;
+  opacity:.85;
+}
+
+button.main{
+  background:linear-gradient(45deg,#d4af37,#b8962e);
+  border:none;
+  padding:12px 28px;
+  border-radius:30px;
+  font-weight:bold;
+  cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<!-- شاشة المتابعة -->
+<div id="subscribe">
+  <div class="sub-box">
+    <h2>تابعنا على إنستغرام</h2>
+    <p>يجب متابعة الحساب لاستخدام الموقع</p>
+
+    <div class="dev">المبرمج : زيد غسان</div>
+
+    <a href="https://www.instagram.com/3.vo3?igsh=OW83ZGUyNjV0Nmhp" target="_blank">
+      متابعة الحساب
+    </a>
+
+    <label>
+      <input type="checkbox" id="confirm">
+      قمت بمتابعة الحساب
+    </label>
+
+    <button onclick="enter()">دخول الموقع</button>
+  </div>
+</div>
+
+<!-- الموقع -->
+<div class="container">
+  <h1>Stylek ZY</h1>
+  <p>Luxury AI Fashion</p>
+
+  <div class="counter">
+    عدد زياراتك بعد الاشتراك: <span id="visits">0</span>
+  </div>
+
+  <button class="main">معالجة بالذكاء الاصطناعي</button>
+</div>
+
+<script>
+/* التحقق من الاشتراك */
+if(!localStorage.getItem("followed")){
+  document.getElementById("subscribe").style.display="flex";
+}else{
+  document.getElementById("subscribe").style.display="none";
+  increaseVisits();
+}
+
+/* دخول الموقع */
+function enter(){
+  if(!document.getElementById("confirm").checked){
+    alert("⚠️ يجب تأكيد المتابعة أولاً");
+    return;
+  }
+  localStorage.setItem("followed","yes");
+  localStorage.setItem("visits", 0);
+  document.getElementById("subscribe").style.display="none";
+  increaseVisits();
+}
+
+/* عداد الزيارات */
+function increaseVisits(){
+  let v = parseInt(localStorage.getItem("visits") || "0");
+  v++;
+  localStorage.setItem("visits", v);
+  document.getElementById("visits").innerText = v;
+}
+
+/* تحذير عند إزالة الاشتراك */
+window.addEventListener("storage", () => {
+  if(!localStorage.getItem("followed")){
+    alert("⚠️ تم إلغاء الاشتراك! يجب متابعة الحساب مرة أخرى");
+    location.reload();
+  }
+});
+</script>
+
+</body>
+</html>
